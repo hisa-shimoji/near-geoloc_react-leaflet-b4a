@@ -2,21 +2,28 @@ import React, { useState, useEffect } from "react";
 import Parse from "parse";
 import "leaflet/dist/leaflet.css";
 
-const Leaflet = typeof window !== `undefined` ? require("leaflet") : null
-const rleaflet = typeof window !== `undefined` ? require("react-leaflet") : null
+const Leaflet = typeof window !== `undefined` ? require("leaflet") : null;
+const rleaflet =
+  typeof window !== `undefined` ? require("react-leaflet") : null;
 
-const pin_icon = typeof window !== `undefined` ? new Leaflet.Icon({
-  iconUrl: require("../images/mappin.png"),
-  iconSize: new Leaflet.Point(40, 40),
-  iconAnchor: [25, 50],
-}) : null
-const f_icon = typeof window !== `undefined` ? new Leaflet.Icon({
-  iconUrl: require("../images/station.png"),
-  iconSize: new Leaflet.Point(40, 40),
-}) : null
+const pin_icon =
+  typeof window !== `undefined`
+    ? new Leaflet.Icon({
+        iconUrl: require("../images/mappin.png"),
+        iconSize: new Leaflet.Point(40, 40),
+        iconAnchor: [25, 50],
+      })
+    : null;
+const f_icon =
+  typeof window !== `undefined`
+    ? new Leaflet.Icon({
+        iconUrl: require("../images/station.png"),
+        iconSize: new Leaflet.Point(40, 40),
+      })
+    : null;
 
-Parse.initialize(process.env.B4A_APP_ID, process.env.B4A_JS_KEY);
-Parse.serverURL = "https://parseapi.back4app.com/";
+// Parse.initialize(process.env.B4A_APP_ID, process.env.B4A_JS_KEY);
+// Parse.serverURL = "https://parseapi.back4app.com/";
 
 const GeoView = (props) => {
   const [position, setPosition] = useState({
@@ -34,8 +41,7 @@ const GeoView = (props) => {
 
     return (
       <>
-        <rleaflet.Marker icon={pin_icon} position={position}>
-        </rleaflet.Marker>
+        <rleaflet.Marker icon={pin_icon} position={position}></rleaflet.Marker>
         {facilities.map((f) => {
           return (
             <rleaflet.Marker
@@ -47,7 +53,12 @@ const GeoView = (props) => {
               ]}
             >
               <rleaflet.Popup>{f.attributes.Name}</rleaflet.Popup>
-              <rleaflet.Tooltip direction="top" offset={[0, -20]} opacity={1} permanent>
+              <rleaflet.Tooltip
+                direction="top"
+                offset={[0, -20]}
+                opacity={1}
+                permanent
+              >
                 {f.attributes.Name}
               </rleaflet.Tooltip>
             </rleaflet.Marker>
@@ -58,6 +69,13 @@ const GeoView = (props) => {
   }
 
   useEffect(() => {
+    Parse.initialize(process.env.B4A_APP_ID, process.env.B4A_JS_KEY);
+    Parse.serverURL = "https://parseapi.back4app.com/";
+    console.log("p_init")
+  }, []);
+
+  useEffect(() => {
+    console.log("p_q")
     const geoQ_curr_pos = () => {
       const GeoClass = Parse.Object.extend("test");
       const query = new Parse.Query(GeoClass);
