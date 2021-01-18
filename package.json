@@ -1,1 +1,25 @@
-{"name":"near_geoloc_raact-leaflet-b4a","version":"1.0.0","private":true,"description":"near_geoloc_raact-leaflet-b4a","author":"Hisashi Shimoji","keywords":["gatsby"],"scripts":{"develop":"gatsby develop","start":"gatsby develop","build":"gatsby build","serve":"gatsby serve","clean":"gatsby clean"},"dependencies":{"gatsby":"^2.26.1","react":"^16.13.1","react-dom":"^16.13.1"}}
+{
+  "name": "near_geoloc_raact-leaflet-b4a",
+  "version": "1.0.0",
+  "private": true,
+  "description": "near_geoloc_raact-leaflet-b4a",
+  "author": "Hisashi Shimoji",
+  "keywords": [
+    "gatsby"
+  ],
+  "scripts": {
+    "develop": "gatsby develop",
+    "start": "gatsby develop",
+    "build": "gatsby build",
+    "serve": "gatsby serve",
+    "clean": "gatsby clean"
+  },
+  "dependencies": {
+    "gatsby": "^2.26.1",
+    "leaflet": "^1.7.1",
+    "parse": "^2.19.0",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-leaflet": "^3.0.5"
+  }
+}
