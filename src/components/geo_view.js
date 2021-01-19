@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Parse from "parse";
+// import Parse from "parse";
+import Parse from "../utils/parse_db";
 import "leaflet/dist/leaflet.css";
 
 const Leaflet = typeof window !== `undefined` ? require("leaflet") : null;
@@ -69,14 +70,15 @@ const GeoView = (props) => {
   }
 
   useEffect(() => {
-    Parse.initialize(process.env.B4A_APP_ID, process.env.B4A_JS_KEY);
-    Parse.serverURL = "https://parseapi.back4app.com/";
+    // Parse.initialize(process.env.B4A_APP_ID, process.env.B4A_JS_KEY);
+    // Parse.serverURL = "https://parseapi.back4app.com/";
     console.log("p_init")
   }, []);
 
   useEffect(() => {
     console.log("p_q")
     const geoQ_curr_pos = () => {
+      // const testp = Parse
       const GeoClass = Parse.Object.extend("test");
       const query = new Parse.Query(GeoClass);
       const myloc = new Parse.GeoPoint(position.lat, position.lng);
