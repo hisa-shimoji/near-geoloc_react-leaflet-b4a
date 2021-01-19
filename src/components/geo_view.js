@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-// import Parse from "parse";
-import Parse from "../utils/parse_db";
+import Parse from "parse";
+// import Parse from "../utils/parse_db";
 import "leaflet/dist/leaflet.css";
+
+import GatsbyConfig from '../../gatsby-config'
 
 const Leaflet = typeof window !== `undefined` ? require("leaflet") : null;
 const rleaflet =
@@ -23,8 +25,8 @@ const f_icon =
       })
     : null;
 
-// Parse.initialize(process.env.B4A_APP_ID, process.env.B4A_JS_KEY);
-// Parse.serverURL = "https://parseapi.back4app.com/";
+Parse.initialize(GatsbyConfig.parseConf.app_id, GatsbyConfig.parseConf.js_key);
+Parse.serverURL = GatsbyConfig.parseConf.server_url;
 
 const GeoView = (props) => {
   const [position, setPosition] = useState({
@@ -72,7 +74,7 @@ const GeoView = (props) => {
   useEffect(() => {
     // Parse.initialize(process.env.B4A_APP_ID, process.env.B4A_JS_KEY);
     // Parse.serverURL = "https://parseapi.back4app.com/";
-    console.log("p_init " + process.env.B4A_SERVER_URL)
+    console.log("p_init " + GatsbyConfig.parseConf.server_url)
   }, []);
 
   useEffect(() => {
@@ -101,6 +103,7 @@ const GeoView = (props) => {
 
   return (
     <>
+    {GatsbyConfig.siteMetadata.title}
       {typeof window !== "undefined" ? (
         <rleaflet.MapContainer
           center={position}
