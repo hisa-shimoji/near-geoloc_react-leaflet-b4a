@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from "react";
-import Parse from "parse";
-// import Parse from "../utils/parse_db";
+import axios from "axios";
 import "leaflet/dist/leaflet.css";
-
-import GatsbyConfig from '../../gatsby-config'
 
 const Leaflet = typeof window !== `undefined` ? require("leaflet") : null;
 const rleaflet =
@@ -24,9 +21,6 @@ const f_icon =
         iconSize: new Leaflet.Point(40, 40),
       })
     : null;
-
-Parse.initialize(GatsbyConfig.parseConf.app_id, GatsbyConfig.parseConf.js_key);
-Parse.serverURL = GatsbyConfig.parseConf.server_url;
 
 const GeoView = (props) => {
   const [position, setPosition] = useState({
@@ -51,18 +45,18 @@ const GeoView = (props) => {
               key={f.id}
               icon={f_icon}
               position={[
-                f.attributes.location._latitude,
-                f.attributes.location._longitude,
+                f.lat,
+                f.lng,
               ]}
             >
-              <rleaflet.Popup>{f.attributes.Name}</rleaflet.Popup>
+              <rleaflet.Popup>{f.name}</rleaflet.Popup>
               <rleaflet.Tooltip
                 direction="top"
                 offset={[0, -20]}
                 opacity={1}
                 permanent
               >
-                {f.attributes.Name}
+                {f.name}
               </rleaflet.Tooltip>
             </rleaflet.Marker>
           );
@@ -72,38 +66,20 @@ const GeoView = (props) => {
   }
 
   useEffect(() => {
-    // Parse.initialize(process.env.B4A_APP_ID, process.env.B4A_JS_KEY);
-    // Parse.serverURL = "https://parseapi.back4app.com/";
-    console.log("p_init " + GatsbyConfig.parseConf.server_url)
-  }, []);
-
-  useEffect(() => {
-    console.log("p_q")
-    const geoQ_curr_pos = () => {
-      // const testp = Parse
-      const GeoClass = Parse.Object.extend("test");
-      const query = new Parse.Query(GeoClass);
-      const myloc = new Parse.GeoPoint(position.lat, position.lng);
-
-      query
-        .near("location", myloc)
-        .limit(2)
-        .find()
-        .then(
-          (result) => {
-            setFacilities(result);
-          },
-          (error) => {
-            console.error(error);
-          }
-        );
-    };
-    geoQ_curr_pos();
+    // console.log("p_q");
+    axios
+      .post("/.netlify/functions/parse_geo", {
+        lat: position.lat,
+        lng: position.lng,
+        points_num: 2,
+      })
+      .then((results) => {
+        setFacilities(results.data);
+      });
   }, [position]);
 
   return (
     <>
-    {GatsbyConfig.siteMetadata.title}
       {typeof window !== "undefined" ? (
         <rleaflet.MapContainer
           center={position}

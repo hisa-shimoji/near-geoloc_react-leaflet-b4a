@@ -12,9 +12,11 @@
     "start": "gatsby develop",
     "build": "gatsby build",
     "serve": "gatsby serve",
-    "clean": "gatsby clean"
+    "clean": "gatsby clean",
+    "debug": "netlify dev --inspect"
   },
   "dependencies": {
+    "axios": "^0.21.1",
     "gatsby": "^2.26.1",
     "leaflet": "^1.7.1",
     "parse": "^2.19.0",
